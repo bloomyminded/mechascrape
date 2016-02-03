@@ -1,0 +1,19 @@
+<ul>
+  <% @links.each do |l| %>
+    <% if %r{^(http|https)}.match(l.href) %>
+      <li><a class="item" href="<%= l.href %>" ><%= l %></a></li>
+    <% end %>
+  <% end %>
+</ul>
+<script>
+$("a").click(function(e) {
+  e.preventDefault();
+  url = $(this).attr("href");
+  $.ajax({
+    success: function() {
+      $("#results").load("/fetch" + "?url=" + url);
+      $('input').val(url);
+    }
+  });
+});
+</script>
